@@ -57,6 +57,9 @@ namespace CR_WrapInTryFunction
 
             var method = builder.AddMethod(activeClass, "bool", "Try" + activeMethod.Name);
 
+            // STATIC
+            method.IsStatic = activeMethod.IsStatic;
+
             // PARAMS
             foreach (Param param in activeMethod.Parameters)
             {
