@@ -54,11 +54,12 @@ namespace CR_WrapInTryFunction
             Method activeMethod = CodeRush.Source.ActiveMethod;
             var builder = new ElementBuilder();
 
+            Logger.Log("WITF:Builder Built");
 
             var method = builder.AddMethod(activeClass, "bool", "Try" + activeMethod.Name);
-
-            // STATIC
             method.IsStatic = activeMethod.IsStatic;
+            Logger.Log("WITF:Method Created");
+
 
             // PARAMS
             foreach (Param param in activeMethod.Parameters)
@@ -67,7 +68,7 @@ namespace CR_WrapInTryFunction
             }
             Param resultParam = builder.BuildParameter(activeMethod.GetTypeName(), "result", ArgumentDirection.Out);
             method.Parameters.Add(resultParam);
-
+            Logger.Log("WITF:Params Added");
 
             // METHOD CALL
             var arguments = new List<string>();
@@ -75,23 +76,38 @@ namespace CR_WrapInTryFunction
             {
                 arguments.Add(SourceParam.Name);
             }
+            Logger.Log("WITF:Arguments Built");
 
             var methodCall = builder.BuildMethodCall(activeMethod.Name, arguments.ToArray());
-            
+            Logger.Log("WITF:Methodcall Added");
+
             var Try = builder.AddTry(method);
             Try.AddNode(builder.BuildAssignment("result", methodCall));
             Try.AddNode(builder.BuildReturn("true"));
+            Logger.Log("WITF:Try Added");
 
             var ExCatch = builder.AddCatch(method);
             ExCatch.AddNode(builder.BuildAssignment("result", CodeRush.Language.GetNullReferenceExpression()));
             ExCatch.AddNode(builder.BuildReturn("false"));
+            Logger.Log("WITF:Catch Added");
 
             // RENDER METHOD
             activeClass.AddNode(method);
             var Code = CodeRush.CodeMod.GenerateCode(method, false);
+            Logger.Log("WITF:Code Generated");
+
             int LastLine = activeMethod.Range.End.Line;
-            var newMethodRange = CodeRush.Documents.ActiveTextDocument.InsertText(new SourcePoint(LastLine+1,1), Code);
+            Logger.Log(String.Format("WITF:Last Line calculated = {0}", LastLine));
+                        
+            SourcePoint InsertionPoint = new SourcePoint(LastLine + 1, 1);
+            Logger.Log(String.Format("WITF:InsertionPoint Calculated=(Line:{0},Offset:{1})",
+                                     InsertionPoint.Line, InsertionPoint.Offset));
+
+            var newMethodRange = CodeRush.Documents.ActiveTextDocument.InsertText(InsertionPoint, Code);
+            Logger.Log("WITF:Code Inserted");
+
             CodeRush.Documents.Format(newMethodRange);
+            Logger.Log("WITF:Code Formatted");
         }
     }
 }

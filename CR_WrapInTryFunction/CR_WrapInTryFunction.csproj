@@ -76,6 +76,7 @@
     <Reference Include="DevExpress.CodeRush.VSCore" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger.cs" />
     <Compile Include="PlugIn1.cs">
       <SubType>Component</SubType>
     </Compile>
