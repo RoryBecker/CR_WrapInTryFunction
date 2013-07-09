@@ -3,7 +3,7 @@
     <Identifier Id="CR_WrapInTryFunction">
         <Name>WrapInTryFunction</Name>
         <Author>Rory Becker</Author>
-        <Version>1.0</Version>
+        <Version>1.1</Version>
         <Description xml:space="preserve">WrapInTryFunction creates a wrapper function around the active function in the same way 'TryParse' wraps 'Parse'</Description>
         <Locale>1033</Locale>
         <SupportedProducts>
