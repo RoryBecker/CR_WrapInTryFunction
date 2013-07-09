@@ -42,7 +42,6 @@ namespace CR_WrapInTryFunction
         }
         private void WrapInTryFunction_CheckAvailability(Object sender, CheckContentAvailabilityEventArgs ea)
         {
-
             Method activeMethod = CodeRush.Source.ActiveMethod;
             ea.Available = activeMethod != null && activeMethod.MethodType == MethodTypeEnum.Function;
         }
@@ -98,7 +97,7 @@ namespace CR_WrapInTryFunction
 
             int LastLine = activeMethod.Range.End.Line;
             Logger.Log(String.Format("WITF:Last Line calculated = {0}", LastLine));
-                        
+
             SourcePoint InsertionPoint = new SourcePoint(LastLine + 1, 1);
             Logger.Log(String.Format("WITF:InsertionPoint Calculated=(Line:{0},Offset:{1})",
                                      InsertionPoint.Line, InsertionPoint.Offset));
@@ -108,6 +107,12 @@ namespace CR_WrapInTryFunction
 
             CodeRush.Documents.Format(newMethodRange);
             Logger.Log("WITF:Code Formatted");
+        }
+
+        private void PlugIn1_OptionsChanged(OptionsChangedEventArgs ea)
+        {
+            if (ea.OptionsPages.Contains(typeof (Options1)))
+                Logger.Enabled = Options1.LoadOptions();
         }
     }
 }

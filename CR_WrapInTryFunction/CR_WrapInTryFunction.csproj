@@ -60,6 +60,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.DXCore.Controls.Utils.v6.3, Version=13.1.4.0, Culture=neutral, PublicKeyToken=35c9f04b7764aa3d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -77,6 +78,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger.cs" />
+    <Compile Include="Options1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Options1.Designer.cs">
+      <DependentUpon>Options1.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlugIn1.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -107,6 +114,14 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Options1.resx">
+      <DependentUpon>Options1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlugIn1.resx">
+      <DependentUpon>PlugIn1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
